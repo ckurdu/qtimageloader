@@ -59,9 +59,10 @@
 
 #include "imageviewer.h"
 
-bool load_lib(QString lib_location)
+bool load_lib(QString lib_file)
 {
 
+    QString lib_location = QString ("%1/%2").arg(QApplication::applicationDirPath()).arg(lib_file);
     QLibrary loader(lib_location);
     QFile file(lib_location);
     if(file.exists())
@@ -99,27 +100,26 @@ bool load_plugin(QString lib_file)
 
 }
 
-    QString file_location = "F:/downloads/sample1.heif";
 #ifdef QT_DEBUG
-    QString lib_location  = "C:/Qt/5.11.3/msvc2015_64/plugins/imageformats/heifd.dll";
-    QString plugin_location  = "C:/Qt/5.11.3/msvc2015_64/plugins/imageformats/qheifd.dll";
-    QString codec_location  = "C:/Qt/5.11.3/msvc2015_64/plugins/imageformats/libde265.dll";
-    QString libx_location  = "C:/Qt/5.11.3/msvc2015_64/plugins/imageformats/libx265.dll";
+    QString lib_location  = "heifd.dll";
+    QString plugin_location  = "qheifd.dll";
+    QString codec_location  = "libde265d.dll";
+    QString libx_location  = "libx265d.dll";
 #else
-    QString lib_location  = "C:/bin/libs/heif.dll";
-    QString plugin_location  = "C:/Qt/5.11.3/msvc2015_64/plugins/imageformats/qheif.dll";
-    QString codec_location  = "c:/bin/libs/libde265.dll";
-    QString libx_location  = "c:/bin/libs/libx265.dll";
+    QString lib_location  = "heif.dll";
+    QString plugin_location  = "qheif.dll";
+    QString codec_location  = "libde265.dll";
+    QString libx_location  = "libx265.dll";
 #endif
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     QGuiApplication::setApplicationDisplayName(ImageViewer::tr("Image Viewer"));
-    load_lib(libx_location);
+    //load_lib(libx_location);
     load_lib(codec_location);
     load_lib(lib_location);
-    load_plugin("qheif.dll");
+    load_plugin(plugin_location);
 
     QCommandLineParser commandLineParser;
     commandLineParser.addHelpOption();
